@@ -65,6 +65,7 @@ public class CovidRestController {
 	@RequestMapping(value="/GetHistoricalCasesIndia",method = RequestMethod.GET)
 	public ResponseEntity<HistoricalDataIndiaRecoreds> indiaHistoryData(){
 		try {
+		System.out.println("hi balaji");
 		List<HistoricalDataIndia> historicalDataIndia=state_wise_rt_data_service.getHistoricalData();
 		historicalDataIndiaRecoreds.setStatus("OK");
 		historicalDataIndiaRecoreds.setRecords(historicalDataIndia);
@@ -80,6 +81,7 @@ public class CovidRestController {
 	@RequestMapping(value="/GetSateCases",method = RequestMethod.GET)
 	public ResponseEntity<Respose_Realtime_state> stateWiseCases(){
 		try {
+			System.out.println("hi");
 			List<State_Wise_Realtime_Data> list_State_Wise_Realtime_Data=state_wise_rt_data_service.getStateWiseData();
 			respose_Realtime_state.setStatus("OK");
 			respose_Realtime_state.setData(list_State_Wise_Realtime_Data);
