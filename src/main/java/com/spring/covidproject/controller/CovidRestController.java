@@ -65,7 +65,6 @@ public class CovidRestController {
 	@RequestMapping(value="/GetHistoricalCasesIndia",method = RequestMethod.GET)
 	public ResponseEntity<HistoricalDataIndiaRecoreds> indiaHistoryData(){
 		try {
-		System.out.println("hi balaji");
 		List<HistoricalDataIndia> historicalDataIndia=state_wise_rt_data_service.getHistoricalData();
 		historicalDataIndiaRecoreds.setStatus("OK");
 		historicalDataIndiaRecoreds.setRecords(historicalDataIndia);
