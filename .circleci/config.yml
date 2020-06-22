@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/jdk8
+        environment:
+          FLASK_CONFIG: testing
+    steps:
+      - checkout
+      - run:
+          name: Build Maven
+          command: |
+             sudo apt install maven
+	     mvn clean install 
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and push Docker image
+          command: |
+            . target/
+            java -jar covid-project-0.0.1-SNAPSHOT.jar 
+            docker build -t ariv3ra/$IMAGE_NAME:$TAG .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push ariv3ra/$IMAGE_NAME:$TAG
+      - run:
+          name: Deploy app to aws Server via Docker
+          command: |
+            sudo ssh -i oracle.pem ec2-user@ec2-3-85-73-254.compute-1.amazonaws.com "/bin/bash ./deploy_app.sh ariv3ra/$IMAGE_NAME:$TAG"
